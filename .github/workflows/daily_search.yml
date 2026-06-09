@@ -19,3 +19,8 @@ jobs:
     - run: pip install -r requirements.txt
 
     - run: python main.py
+        - name: Upload Excel
+      uses: actions/upload-artifact@v4
+      with:
+        name: work-disengagement-papers
+        path: work_disengagement_papers.xlsx
