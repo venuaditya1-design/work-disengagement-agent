@@ -74,10 +74,11 @@ for keyword in KEYWORDS:
                 paper["source"]
             ))
 
-        except Exception:
+        except Exception as e:
 
-            pass
-
+    print(
+        f"ERROR: {e}"
+    )
 conn.commit()
 
 df = pd.read_sql_query(
