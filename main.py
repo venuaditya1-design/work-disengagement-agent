@@ -1,3 +1,4 @@
+import os
 import sqlite3
 import pandas as pd
 
@@ -9,6 +10,13 @@ from agents.search_agent import (
 )
 
 DB_NAME = "research.db"
+
+# Remove old database so schema is rebuilt
+
+if os.path.exists(DB_NAME):
+    os.remove(DB_NAME)
+
+# Create fresh database
 
 init_db()
 
@@ -24,6 +32,10 @@ for keyword in KEYWORDS:
 
     papers = search_openalex(
         keyword
+    )
+
+    print(
+        f"Found {len(papers)} papers"
     )
 
     for paper in papers:
@@ -51,9 +63,9 @@ for keyword in KEYWORDS:
             )
             VALUES
             (
-                ?,?,?,?,?,?,
-                ?,?,?,?,?,?,
-                ?,?,?,?
+                ?, ?, ?, ?, ?, ?,
+                ?, ?, ?, ?, ?,
+                ?, ?, ?, ?
             )
             """,
             (
@@ -76,9 +88,10 @@ for keyword in KEYWORDS:
 
         except Exception as e:
 
-    print(
-        f"ERROR: {e}"
-    )
+            print(
+                f"ERROR: {e}"
+            )
+
 conn.commit()
 
 df = pd.read_sql_query(
@@ -89,11 +102,14 @@ df = pd.read_sql_query(
     conn
 )
 
+print(
+    f"Total records: {len(df)}"
+)
+
 if (
     "access_type" in df.columns
     and
-    "relevance_score"
-    in df.columns
+    "relevance_score" in df.columns
 ):
 
     access_order = {
@@ -139,4 +155,6 @@ df.to_excel(
 
 conn.close()
 
-print("Finished.")
+print(
+    "Excel file created successfully."
+)
