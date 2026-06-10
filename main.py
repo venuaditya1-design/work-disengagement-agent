@@ -2,7 +2,10 @@ import sqlite3
 import pandas as pd
 
 from database import init_db
-from agents.search_agent import search_openalex, KEYWORDS
+from agents.search_agent import (
+    search_openalex,
+    KEYWORDS
+)
 
 DB_NAME = "research.db"
 
@@ -28,10 +31,20 @@ for keyword in KEYWORDS:
                 year,
                 doi,
                 journal,
+                abstract,
+                citation_count,
+                access_type,
+                pdf_available,
+                pdf_link,
+                repository_link,
+                publisher_link,
                 keyword,
                 source
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            VALUES
+            (
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+            )
             """,
             (
                 paper["title"],
@@ -39,19 +52,57 @@ for keyword in KEYWORDS:
                 paper["year"],
                 paper["doi"],
                 paper["journal"],
+                paper["abstract"],
+                paper["citation_count"],
+                paper["access_type"],
+                paper["pdf_available"],
+                paper["pdf_link"],
+                paper["repository_link"],
+                paper["publisher_link"],
                 paper["keyword"],
                 paper["source"]
             ))
 
-        except Exception:
-            pass
+        except Exception as e:
+            print(
+                f"Skipped duplicate or error: {e}"
+            )
 
 conn.commit()
 
 df = pd.read_sql_query(
-    "SELECT * FROM papers",
+    """
+    SELECT *
+    FROM papers
+    """,
     conn
 )
+
+if "access_type" in df.columns:
+
+    access_order = {
+        "Open Access": 0,
+        "Premium": 1
+    }
+
+    df["sort_order"] = df[
+        "access_type"
+    ].map(access_order)
+
+    df = df.sort_values(
+        by=[
+            "sort_order",
+            "citation_count"
+        ],
+        ascending=[
+            True,
+            False
+        ]
+    )
+
+    df = df.drop(
+        columns=["sort_order"]
+    )
 
 df.to_excel(
     "work_disengagement_papers.xlsx",
