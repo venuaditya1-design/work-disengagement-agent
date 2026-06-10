@@ -7,14 +7,25 @@ def init_db():
 
     conn.execute("""
     CREATE TABLE IF NOT EXISTS papers (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT,
-        authors TEXT,
-        year INTEGER,
-        doi TEXT UNIQUE,
-        journal TEXT,
-        keyword TEXT,
-        source TEXT
+        conn.execute("""
+CREATE TABLE IF NOT EXISTS papers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    authors TEXT,
+    year INTEGER,
+    doi TEXT UNIQUE,
+    journal TEXT,
+    abstract TEXT,
+    citation_count INTEGER,
+    access_type TEXT,
+    pdf_available TEXT,
+    pdf_link TEXT,
+    repository_link TEXT,
+    publisher_link TEXT,
+    keyword TEXT,
+    source TEXT
+)
+""")
     )
     """)
 
