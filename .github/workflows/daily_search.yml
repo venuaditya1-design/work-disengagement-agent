@@ -4,24 +4,25 @@ on:
   workflow_dispatch:
 
 jobs:
+
   search:
 
     runs-on: ubuntu-latest
 
     steps:
 
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-    - run: pip install -r requirements.txt
+      - run: pip install -r requirements.txt
 
-    - run: python main.py
+      - run: python main.py
 
-    - name: Upload Excel
-      uses: actions/upload-artifact@v4
-      with:
-        name: work-disengagement-papers
-        path: work_disengagement_papers.xlsx
+      - name: Upload Excel
+        uses: actions/upload-artifact@v4
+        with:
+          name: work-disengagement-papers
+          path: work_disengagement_papers.xlsx
