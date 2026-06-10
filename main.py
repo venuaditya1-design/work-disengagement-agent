@@ -2,6 +2,7 @@ import sqlite3
 import pandas as pd
 
 from database import init_db
+
 from agents.search_agent import (
     search_openalex,
     KEYWORDS
@@ -11,13 +12,19 @@ DB_NAME = "research.db"
 
 init_db()
 
-conn = sqlite3.connect(DB_NAME)
+conn = sqlite3.connect(
+    DB_NAME
+)
 
 for keyword in KEYWORDS:
 
-    print(f"Searching: {keyword}")
+    print(
+        f"Searching: {keyword}"
+    )
 
-    papers = search_openalex(keyword)
+    papers = search_openalex(
+        keyword
+    )
 
     for paper in papers:
 
@@ -32,6 +39,7 @@ for keyword in KEYWORDS:
                 doi,
                 journal,
                 abstract,
+                relevance_score,
                 citation_count,
                 access_type,
                 pdf_available,
@@ -43,7 +51,9 @@ for keyword in KEYWORDS:
             )
             VALUES
             (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                ?,?,?,?,?,?,
+                ?,?,?,?,?,?,
+                ?,?,?,?
             )
             """,
             (
@@ -53,6 +63,7 @@ for keyword in KEYWORDS:
                 paper["doi"],
                 paper["journal"],
                 paper["abstract"],
+                paper["relevance_score"],
                 paper["citation_count"],
                 paper["access_type"],
                 paper["pdf_available"],
@@ -63,10 +74,9 @@ for keyword in KEYWORDS:
                 paper["source"]
             ))
 
-        except Exception as e:
-            print(
-                f"Skipped duplicate or error: {e}"
-            )
+        except Exception:
+
+            pass
 
 conn.commit()
 
@@ -78,30 +88,47 @@ df = pd.read_sql_query(
     conn
 )
 
-if "access_type" in df.columns:
+if (
+    "access_type" in df.columns
+    and
+    "relevance_score"
+    in df.columns
+):
 
     access_order = {
+
         "Open Access": 0,
+
         "Premium": 1
     }
 
-    df["sort_order"] = df[
+    df[
+        "sort_order"
+    ] = df[
         "access_type"
-    ].map(access_order)
+    ].map(
+        access_order
+    )
 
     df = df.sort_values(
+
         by=[
             "sort_order",
+            "relevance_score",
             "citation_count"
         ],
+
         ascending=[
             True,
+            False,
             False
         ]
     )
 
     df = df.drop(
-        columns=["sort_order"]
+        columns=[
+            "sort_order"
+        ]
     )
 
 df.to_excel(
