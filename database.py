@@ -24,10 +24,7 @@ CREATE TABLE IF NOT EXISTS papers (
     publisher_link TEXT,
     keyword TEXT,
     source TEXT
-)
-""")
     )
     """)
-
     conn.commit()
     conn.close()
