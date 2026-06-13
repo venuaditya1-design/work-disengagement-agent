@@ -1,26 +1,43 @@
 THEORIES = {
 
+    # JD-R
+
     "job demands-resources": "JD-R",
     "jd-r": "JD-R",
+    "job resources": "JD-R",
+    "job demands": "JD-R",
+    "demands-resources": "JD-R",
+
+    # COR
 
     "conservation of resources": "COR",
+    "resource loss": "COR",
+    "resource gain": "COR",
+
+    # SET
 
     "social exchange": "SET",
+    "exchange relationship": "SET",
+
+    # SDT
 
     "self-determination": "SDT",
+    "self determination": "SDT",
 
-    "affective events": "AET"
+    # AET
+
+    "affective events": "AET",
+    "affective event": "AET"
 }
 
 
 METHODS = {
 
     "pls-sem": "PLS-SEM",
-
     "smartpls": "PLS-SEM",
+    "partial least squares": "PLS-SEM",
 
     "structural equation modeling": "SEM",
-
     "structural equation modelling": "SEM",
 
     "amos": "CB-SEM",
@@ -29,23 +46,53 @@ METHODS = {
 
     "cross-sectional": "Cross-Sectional",
 
-    "longitudinal": "Longitudinal"
+    "longitudinal": "Longitudinal",
+
+    "survey": "Survey"
 }
 
 
 INDUSTRIES = {
 
+    # Healthcare
+
     "hospital": "Healthcare",
     "nurse": "Healthcare",
+    "doctor": "Healthcare",
+    "physician": "Healthcare",
+
+    # Education
 
     "teacher": "Education",
+    "faculty": "Education",
+    "lecturer": "Education",
     "university": "Education",
+    "academic": "Education",
+
+    # Banking
 
     "bank": "Banking",
+    "banking": "Banking",
+
+    # IT
 
     "software": "IT",
+    "information technology": "IT",
+    "it sector": "IT",
 
-    "information technology": "IT"
+    # Hospitality
+
+    "hotel": "Hospitality",
+    "hospitality": "Hospitality",
+
+    # Manufacturing
+
+    "manufacturing": "Manufacturing",
+
+    # Public sector
+
+    "public sector": "Public Sector",
+    "government": "Public Sector"
 }
 
 
@@ -56,12 +103,33 @@ COUNTRIES = [
     "china",
     "bangladesh",
     "sri lanka",
+    "nepal",
+
     "united states",
     "usa",
-    "uk",
+    "canada",
+
     "united kingdom",
+    "uk",
+
     "australia",
-    "canada"
+
+    "germany",
+    "france",
+    "italy",
+    "spain",
+
+    "saudi arabia",
+    "uae",
+    "qatar",
+
+    "malaysia",
+    "singapore",
+    "indonesia",
+    "thailand",
+
+    "south africa",
+    "nigeria"
 ]
 
 
