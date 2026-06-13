@@ -33,6 +33,14 @@ def init_db():
 
         publisher_link TEXT,
 
+        theory_primary TEXT,
+
+        method TEXT,
+
+        industry TEXT,
+
+        country TEXT,
+
         keyword TEXT,
 
         source TEXT
